@@ -1,6 +1,7 @@
 package com.example.entity;
 
 
+import com.example.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,11 +18,12 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable= false)
-    private String role;    // ROLE_USER, ROLE_ADMIN
+    private UserRole role;    // ROLE_USER, ROLE_ADMIN
 }

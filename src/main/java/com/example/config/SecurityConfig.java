@@ -31,7 +31,12 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable()) // HTTP Basic 인증 비활성화 -> 브라우저 기본 팝업으로 ID/PW 입력 받는 방식은 사용하지 않음
                 .formLogin(formLogin -> formLogin.disable()) // form 기반 로그인 비활성화 -> Spring Security의 기본 로그인 폼도 사용 안함 ( 프론트엔드와 API 통신 전제로 하는 설정 )
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers(
+                            "/auth/**",
+                            // swagger를 사용하기 위해서는 아래의 세 가지 엔드포인트를 허용해줘야 한다.
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html").permitAll()
                     // /auth/** 경로는 인증 없이 접근 가능 (회원가입, 로그인 등)
                     .anyRequest().authenticated()
                 )
